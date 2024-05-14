@@ -117,7 +117,7 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/signup")
+    /*@PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody Customer customer) {
         try {
 
@@ -139,6 +139,41 @@ public class CustomerController {
             e.printStackTrace(); // Log the exception
             System.out.println("An unexpected error occurred during sign-up: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred during sign-up.");
+        }
+    }*/
+
+    @PostMapping("/signup")
+    public ResponseEntity<Map<String, String>> signUp(@RequestBody Customer customer) {
+        try {
+            // Validate customer data
+            // Add validation logic here
+
+            String encodedPassword = passwordEncoder.encode(customer.getPassword());
+            customer.setPassword(encodedPassword);
+
+            // Save customer to the database
+            Customer createdCustomer = customerService.createCustomer(customer);
+            if (createdCustomer != null) {
+                // Construct the response JSON object
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "Account created successfully!");
+
+                // Return the response entity
+                return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            } else {
+                System.out.println("Failed to create customer.");
+                // If creation failed, return an error response
+                Map<String, String> response = new HashMap<>();
+                response.put("error", "Failed to create account.");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception
+            System.out.println("An unexpected error occurred during sign-up: " + e.getMessage());
+            // If an unexpected error occurred, return an error response
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "An unexpected error occurred during sign-up.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 

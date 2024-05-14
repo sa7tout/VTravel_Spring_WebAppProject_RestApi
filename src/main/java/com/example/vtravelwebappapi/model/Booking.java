@@ -28,5 +28,57 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
-    // Constructors, getters, and setters
+    // Default constructor
+    public Booking() {
+        // Default constructor for JPA and Spring
+    }
+
+    // Getters and setters
+    public Long getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(Long bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public Long getVoyageId() {
+        return voyageId;
+    }
+
+    public void setVoyageId(Long voyageId) {
+        this.voyageId = voyageId;
+    }
+
+    public Date getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(Date bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public BookingStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BookingStatus status) {
+        this.status = status;
+    }
 }
